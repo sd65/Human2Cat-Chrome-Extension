@@ -1,0 +1,28 @@
+{
+  "name": "Cat2Human",
+  "description": "Translate any text on the fly in your browser!",
+  "version": "1.0",
+
+  "icons": {
+	  "128": "logo.png"
+	},
+
+  "manifest_version": 2,
+  "permissions": ["contextMenus"],
+
+  "content_scripts": [{
+    "js": [ "picoModal.min.js", "script.js"],
+    "matches": ["<all_urls>"]
+  }],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "commands": {
+	  "Launch": {
+	    "suggested_key": {
+	      "default": "Alt+T"
+	    },
+      "description": "Launch Cat2Human"
+	  }
+	}
+}
