@@ -1,36 +1,34 @@
 chrome.extension.onMessage.addListener(function (message) {
-	if(message.action=="Launch")
-		if(document.activeElement.value)
-			mainActions("translateInPlace");
-		else
-			mainActions("displayTranslation");
-	else
-		mainActions(message.action);
+  var actionName = message.action;
+	if(actionName == "LaunchAutoViaKeyboard")
+  {
+		if(window.getSelection().toString())
+      actionName = "displayTranslation";
+    else
+      actionName = "translateInPlace";
+  }
+	if(actionName == "translateInPlace") {
+    if(document.activeElement.textContent) {
+      var msg = document.activeElement.textContent;
+      msg = guessAndTranslate(msg);
+      document.activeElement.textContent = msg;
+    } else {
+      var msg = document.activeElement.value;
+      msg = guessAndTranslate(msg);
+      document.activeElement.value = msg;
+    }
+  }
+  if(actionName == "displayTranslation")
+  {
+    var msg = window.getSelection().toString();
+    msg = guessAndTranslate(msg);
+    picoModal({
+      content : msg.replace(/\n/g,"<br/>"),
+      closeButton: false,
+      width : "70%"
+    }).show();
+  }
 });
-
-function mainActions (action)
-{
-	if(action == "translateInPlace") {
-		if(document.activeElement.tagName == "TEXTAREA") {
-			document.activeElement.select();
-			var msg = window.getSelection().toString();
-		}
-		else {
-			var msg = document.activeElement.textContent;
-		}
-		msg = guessAndTranslate(msg);
-		if(document.activeElement.tagName == "TEXTAREA")
-			document.activeElement.value = msg;
-		else
-			document.activeElement.textContent = msg;
-	}
-	if(action == "displayTranslation")
-	{
-		var msg = window.getSelection().toString();
-		msg = guessAndTranslate(msg);
-		picoModal(msg.replace(/\n/g, "<br/>")).show();
-	}
-}
 
 ///////////////////////
 // Translate functions

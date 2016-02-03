@@ -1,6 +1,6 @@
 {
-  "name": "Cat2Human",
-  "description": "Translate any text on the fly in your browser!",
+  "name": "Human2Cat",
+  "description": "Translate any text to cat language on the fly in your browser!",
   "version": "1.0",
 
   "icons": {
@@ -18,7 +18,7 @@
     "scripts": ["background.js"]
   },
   "commands": {
-	  "Launch": {
+	  "LaunchAutoViaKeyboard": {
 	    "suggested_key": {
 	      "default": "Alt+T"
 	    },
